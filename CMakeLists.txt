@@ -149,7 +149,7 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCXX)
 	#add_definitions(-S)
 	#add_definitions(-s)
-	add_definitions(-O2)
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
 
 	#add_definitions(-fprofile-arcs -ftest-coverage) gcov
 	#ctest_enable_coverage()
