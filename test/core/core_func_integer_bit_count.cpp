@@ -1,6 +1,7 @@
 // This has the programs for computing the number of 1-bits
 // in a word, or byte, etc.
 // Max line length is 57, to fit in hacker.book.
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>     //To define "exit", req'd by XLC.
 #include <ctime>
@@ -159,10 +160,10 @@ int pop8(unsigned x)
 // The following works only for 15-bit quantities.
 int pop9(unsigned x)
 {
-	unsigned long long y;
-	y = x * 0x0002000400080010ULL;
-	y = y & 0x1111111111111111ULL;
-	y = y * 0x1111111111111111ULL;
+	uint64_t y;
+	y = x * UINT64_C(0x0002000400080010);
+	y = y & UINT64_C(0x1111111111111111);
+	y = y * UINT64_C(0x1111111111111111);
 	y = y >> 60;
 	return y;
 }

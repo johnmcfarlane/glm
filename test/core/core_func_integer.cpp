@@ -218,12 +218,12 @@ namespace bitfieldReverse
 	GLM_FUNC_QUALIFIER vecType<T, P> bitfieldReverseOps(vecType<T, P> const & v)
 	{
 		vecType<T, P> x(v);
-		x = compute_bitfieldReverseStep<sizeof(T) * 8 >=  2>::call(x, T(0x5555555555555555ull), static_cast<T>( 1));
-		x = compute_bitfieldReverseStep<sizeof(T) * 8 >=  4>::call(x, T(0x3333333333333333ull), static_cast<T>( 2));
-		x = compute_bitfieldReverseStep<sizeof(T) * 8 >=  8>::call(x, T(0x0F0F0F0F0F0F0F0Full), static_cast<T>( 4));
-		x = compute_bitfieldReverseStep<sizeof(T) * 8 >= 16>::call(x, T(0x00FF00FF00FF00FFull), static_cast<T>( 8));
-		x = compute_bitfieldReverseStep<sizeof(T) * 8 >= 32>::call(x, T(0x0000FFFF0000FFFFull), static_cast<T>(16));
-		x = compute_bitfieldReverseStep<sizeof(T) * 8 >= 64>::call(x, T(0x00000000FFFFFFFFull), static_cast<T>(32));
+		x = compute_bitfieldReverseStep<sizeof(T) * 8 >=  2>::call(x, T(UINT64_C(0x5555555555555555)), static_cast<T>( 1));
+		x = compute_bitfieldReverseStep<sizeof(T) * 8 >=  4>::call(x, T(UINT64_C(0x3333333333333333)), static_cast<T>( 2));
+		x = compute_bitfieldReverseStep<sizeof(T) * 8 >=  8>::call(x, T(UINT64_C(0x0F0F0F0F0F0F0F0F)), static_cast<T>( 4));
+		x = compute_bitfieldReverseStep<sizeof(T) * 8 >= 16>::call(x, T(UINT64_C(0x00FF00FF00FF00FF)), static_cast<T>( 8));
+		x = compute_bitfieldReverseStep<sizeof(T) * 8 >= 32>::call(x, T(UINT64_C(0x0000FFFF0000FFFF)), static_cast<T>(16));
+		x = compute_bitfieldReverseStep<sizeof(T) * 8 >= 64>::call(x, T(UINT64_C(0x00000000FFFFFFFF)), static_cast<T>(32));
 		return x;
 	}
 
@@ -1428,12 +1428,12 @@ namespace bitCount
 	GLM_FUNC_QUALIFIER vecType<int, P> bitCount_bitfield(vecType<T, P> const & v)
 	{
 		vecType<typename glm::detail::make_unsigned<T>::type, P> x(*reinterpret_cast<vecType<typename glm::detail::make_unsigned<T>::type, P> const *>(&v));
-		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >=  2>::call(x, typename glm::detail::make_unsigned<T>::type(0x5555555555555555ull), typename glm::detail::make_unsigned<T>::type( 1));
-		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >=  4>::call(x, typename glm::detail::make_unsigned<T>::type(0x3333333333333333ull), typename glm::detail::make_unsigned<T>::type( 2));
-		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >=  8>::call(x, typename glm::detail::make_unsigned<T>::type(0x0F0F0F0F0F0F0F0Full), typename glm::detail::make_unsigned<T>::type( 4));
-		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >= 16>::call(x, typename glm::detail::make_unsigned<T>::type(0x00FF00FF00FF00FFull), typename glm::detail::make_unsigned<T>::type( 8));
-		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >= 32>::call(x, typename glm::detail::make_unsigned<T>::type(0x0000FFFF0000FFFFull), typename glm::detail::make_unsigned<T>::type(16));
-		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >= 64>::call(x, typename glm::detail::make_unsigned<T>::type(0x00000000FFFFFFFFull), typename glm::detail::make_unsigned<T>::type(32));
+		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >=  2>::call(x, typename glm::detail::make_unsigned<T>::type(UINT64_C(0x5555555555555555)), typename glm::detail::make_unsigned<T>::type( 1));
+		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >=  4>::call(x, typename glm::detail::make_unsigned<T>::type(UINT64_C(0x3333333333333333)), typename glm::detail::make_unsigned<T>::type( 2));
+		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >=  8>::call(x, typename glm::detail::make_unsigned<T>::type(UINT64_C(0x0F0F0F0F0F0F0F0F)), typename glm::detail::make_unsigned<T>::type( 4));
+		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >= 16>::call(x, typename glm::detail::make_unsigned<T>::type(UINT64_C(0x00FF00FF00FF00FF)), typename glm::detail::make_unsigned<T>::type( 8));
+		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >= 32>::call(x, typename glm::detail::make_unsigned<T>::type(UINT64_C(0x0000FFFF0000FFFF)), typename glm::detail::make_unsigned<T>::type(16));
+		x = compute_bitfieldBitCountStep<sizeof(T) * 8 >= 64>::call(x, typename glm::detail::make_unsigned<T>::type(UINT64_C(0x00000000FFFFFFFF)), typename glm::detail::make_unsigned<T>::type(32));
 		return vecType<int, P>(x);
 	}
 
