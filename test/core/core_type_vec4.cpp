@@ -207,6 +207,12 @@ int test_vec4_operators()
 
 		A += 1.0f;
 		Error += A == glm::vec4(6, 8, 10, 12) ? 0 : 1;
+
+#		if GLM_HAS_DECLTYPE
+			glm::vec4 const O(1.0f, 2.0f, 3.0f, 4.0f);
+			glm::vec4 const C = O + 1.0;
+			Error += C == glm::vec4(2, 3, 4, 5) ? 0 : 1;
+#		endif
 	}
 	{
 		glm::vec4 A(1.0f, 2.0f, 3.0f, 4.0f);
@@ -217,6 +223,12 @@ int test_vec4_operators()
 
 		B -= 1.0f;
 		Error += B == glm::vec4(2, 2, 2, 2) ? 0 : 1;
+
+#		if GLM_HAS_DECLTYPE
+			glm::vec4 const O(1.0f, 2.0f, 3.0f, 4.0f);
+			glm::vec4 const C = O - 1.0;
+			Error += C == glm::vec4(0, 1, 2, 3) ? 0 : 1;
+#		endif
 	}
 	{
 		glm::vec4 A(1.0f, 2.0f, 3.0f, 4.0f);
@@ -227,6 +239,12 @@ int test_vec4_operators()
 
 		A *= 2.0f;
 		Error += A == glm::vec4(8, 20, 36, 56) ? 0 : 1;
+
+#		if GLM_HAS_DECLTYPE
+			glm::vec4 const O(1.0f, 2.0f, 3.0f, 4.0f);
+			glm::vec4 const C = O * 1;
+			Error += C == O ? 0 : 1;
+#		endif
 	}
 	{
 		glm::vec4 A(1.0f, 2.0f, 3.0f, 4.0f);
@@ -237,6 +255,12 @@ int test_vec4_operators()
 
 		B /= 2.0f;
 		Error += B == glm::vec4(2, 1.25, 1, 7.0f / 4.0f / 2.0f) ? 0 : 1;
+
+#		if GLM_HAS_DECLTYPE
+			glm::vec4 const O(1.0f, 2.0f, 3.0f, 4.0f);
+			glm::vec4 const C = O / 1;
+			Error += C == O ? 0 : 1;
+#		endif
 	}
 	{
 		glm::vec4 B(2.0f);
