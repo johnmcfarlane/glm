@@ -70,39 +70,47 @@ namespace detail
 		}
 	};
 
-	template <typename T, precision P, bool Aligned>
+	template <typename T, typename U, typename R, precision P, bool Aligned>
 	struct compute_vec4_mod
 	{
-		GLM_FUNC_QUALIFIER static tvec4<T, P> call(tvec4<T, P> const & a, tvec4<T, P> const & b)
+		typedef tvec4<R, P> result_type;
+
+		GLM_FUNC_QUALIFIER static result_type call(tvec4<T, P> const & a, tvec4<U, P> const & b)
 		{
-			return tvec4<T, P>(a.x % b.x, a.y % b.y, a.z % b.z, a.w % b.w);
+			return result_type(a.x % b.x, a.y % b.y, a.z % b.z, a.w % b.w);
 		}
 	};
 
-	template <typename T, precision P, int IsInt, std::size_t Size, bool Aligned>
+	template <typename T, typename U, typename R, precision P, int IsInt, std::size_t Size, bool Aligned>
 	struct compute_vec4_and
 	{
-		GLM_FUNC_QUALIFIER static tvec4<T, P> call(tvec4<T, P> const & a, tvec4<T, P> const & b)
+		typedef tvec4<R, P> result_type;
+
+		GLM_FUNC_QUALIFIER static result_type call(tvec4<T, P> const & a, tvec4<U, P> const & b)
 		{
-			return tvec4<T, P>(a.x & b.x, a.y & b.y, a.z & b.z, a.w & b.w);
+			return result_type(a.x & b.x, a.y & b.y, a.z & b.z, a.w & b.w);
 		}
 	};
 
-	template <typename T, precision P, int IsInt, std::size_t Size, bool Aligned>
+	template <typename T, typename U, typename R, precision P, int IsInt, std::size_t Size, bool Aligned>
 	struct compute_vec4_or
 	{
-		GLM_FUNC_QUALIFIER static tvec4<T, P> call(tvec4<T, P> const & a, tvec4<T, P> const & b)
+		typedef tvec4<R, P> result_type;
+
+		GLM_FUNC_QUALIFIER static result_type call(tvec4<T, P> const & a, tvec4<U, P> const & b)
 		{
-			return tvec4<T, P>(a.x | b.x, a.y | b.y, a.z | b.z, a.w | b.w);
+			return result_type(a.x | b.x, a.y | b.y, a.z | b.z, a.w | b.w);
 		}
 	};
 
-	template <typename T, precision P, int IsInt, std::size_t Size, bool Aligned>
+	template <typename T, typename U, typename R, precision P, int IsInt, std::size_t Size, bool Aligned>
 	struct compute_vec4_xor
 	{
-		GLM_FUNC_QUALIFIER static tvec4<T, P> call(tvec4<T, P> const & a, tvec4<T, P> const & b)
+		typedef tvec4<R, P> result_type;
+
+		GLM_FUNC_QUALIFIER static result_type call(tvec4<T, P> const & a, tvec4<U, P> const & b)
 		{
-			return tvec4<T, P>(a.x ^ b.x, a.y ^ b.y, a.z ^ b.z, a.w ^ b.w);
+			return result_type(a.x ^ b.x, a.y ^ b.y, a.z ^ b.z, a.w ^ b.w);
 		}
 	};
 
@@ -491,84 +499,84 @@ namespace detail
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator%=(U scalar)
 	{
-		return (*this = detail::compute_vec4_mod<T, P, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
+		return (*this = detail::compute_vec4_mod<T, T, T, P, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator%=(tvec1<U, P> const& v)
 	{
-		return (*this = detail::compute_vec4_mod<T, P, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_mod<T, T, T, P, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator%=(tvec4<U, P> const& v)
 	{
-		return (*this = detail::compute_vec4_mod<T, P, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_mod<T, T, T, P, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator&=(U scalar)
 	{
-		return (*this = detail::compute_vec4_and<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
+		return (*this = detail::compute_vec4_and<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator&=(tvec1<U, P> const & v)
 	{
-		return (*this = detail::compute_vec4_and<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_and<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator&=(tvec4<U, P> const & v)
 	{
-		return (*this = detail::compute_vec4_and<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_and<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator|=(U scalar)
 	{
-		return (*this = detail::compute_vec4_or<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
+		return (*this = detail::compute_vec4_or<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator|=(tvec1<U, P> const & v)
 	{
-		return (*this = detail::compute_vec4_or<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_or<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator|=(tvec4<U, P> const & v)
 	{
-		return (*this = detail::compute_vec4_or<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_or<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator^=(U scalar)
 	{
-		return (*this = detail::compute_vec4_xor<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
+		return (*this = detail::compute_vec4_xor<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(scalar)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator^=(tvec1<U, P> const & v)
 	{
-		return (*this = detail::compute_vec4_xor<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_xor<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
 	template <typename U> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> & tvec4<T, P>::operator^=(tvec4<U, P> const & v)
 	{
-		return (*this = detail::compute_vec4_xor<T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
+		return (*this = detail::compute_vec4_xor<T, U, T, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(*this, tvec4<T, P>(v)));
 	}
 
 	template <typename T, precision P>
@@ -629,6 +637,398 @@ namespace detail
 
 	// -- Binary arithmetic operators --
 
+#if GLM_HAS_DECLTYPE
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator+(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x + scalar), P>
+	{
+		typedef tvec4<decltype(v.x+scalar), P> xvec4;
+		return detail::compute_vec4_add<decltype(v.x+scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x+scalar)>(scalar)));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator+(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x + v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x+v2.x), P> xvec4;
+		return detail::compute_vec4_add<decltype(v1.x+v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2.x));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator+(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar + v.x), P>
+	{
+		typedef tvec4<decltype(scalar+v.x), P> xvec4;
+		return detail::compute_vec4_add<decltype(scalar+v.x), P, detail::is_aligned<P>::value>::call(xvec4(static_cast<decltype(scalar+v.x)>(scalar)), xvec4(v));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator+(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x + v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x+v2.x), P> xvec4;
+		return detail::compute_vec4_add<decltype(v1.x+v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1.x), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator+(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x + v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x+v2.x), P> xvec4;
+		return detail::compute_vec4_add<decltype(v1.x+v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator-(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x - scalar), P>
+	{
+		typedef tvec4<decltype(v.x - scalar), P> xvec4;
+		return detail::compute_vec4_sub<decltype(v.x - scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x - scalar)>(scalar)));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator-(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x - v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x - v2.x), P> xvec4;
+		return detail::compute_vec4_sub<decltype(v1.x - v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2.x));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator-(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar - v.x), P>
+	{
+		typedef tvec4<decltype(scalar - v.x), P> xvec4;
+		return detail::compute_vec4_sub<decltype(scalar - v.x), P, detail::is_aligned<P>::value>::call(xvec4(static_cast<decltype(scalar - v.x)>(scalar)), xvec4(v));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator-(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x - v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x - v2.x), P> xvec4;
+		return detail::compute_vec4_sub<decltype(v1.x - v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1.x), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator-(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x - v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x - v2.x), P> xvec4;
+		return detail::compute_vec4_sub<decltype(v1.x - v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator*(tvec4<T, P> const & v, U scalar)
+	-> typename std::enable_if<std::numeric_limits<U>::is_specialized, tvec4<decltype(v.x * scalar), P>>::type
+	{
+		typedef tvec4<decltype(v.x * scalar), P> xvec4;
+		return detail::compute_vec4_mul<decltype(v.x * scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x * scalar)>(scalar)));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator*(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x * v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x * v2.x), P> xvec4;
+		return detail::compute_vec4_mul<decltype(v1.x * v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2.x));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator*(T scalar, tvec4<U, P> const & v)
+	-> typename std::enable_if<std::numeric_limits<T>::is_specialized, tvec4<decltype(scalar * v.x), P>>::type
+	{
+		typedef tvec4<decltype(v.x * scalar), P> xvec4;
+		return detail::compute_vec4_mul<decltype(v.x * scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x * scalar)>(scalar)));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator*(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x * v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x * v2.x), P> xvec4;
+		return detail::compute_vec4_mul<decltype(v1.x * v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1.x), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator*(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x * v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x * v2.x), P> xvec4;
+		return detail::compute_vec4_mul<decltype(v1.x * v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator/(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x / scalar), P>
+	{
+		typedef tvec4<decltype(v.x / scalar), P> xvec4;
+		return detail::compute_vec4_div<decltype(v.x / scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x / scalar)>(scalar)));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator/(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x / v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x / v2.x), P> xvec4;
+		return detail::compute_vec4_div<decltype(v1.x / v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2.x));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator/(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar / v.x), P>
+	{
+		typedef tvec4<decltype(scalar / v.x), P> xvec4;
+		return detail::compute_vec4_div<decltype(scalar / v.x), P, detail::is_aligned<P>::value>::call(xvec4(static_cast<decltype(scalar / v.x)>(scalar)), xvec4(v));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator/(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x / v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x / v2.x), P> xvec4;
+		return detail::compute_vec4_div<decltype(v1.x / v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1.x), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator/(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x / v2.x), P>
+	{
+		typedef tvec4<decltype(v1.x / v2.x), P> xvec4;
+		return detail::compute_vec4_div<decltype(v1.x / v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator%(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x % scalar), P>
+	{
+		typedef tvec4<decltype(v.x % scalar), P> xvec4;
+		return detail::compute_vec4_mod<T, U, decltype(v.x % scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x % scalar)>(scalar)));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator%(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x % v2.x), P>
+	{
+		using R = decltype(v1.x % v2.x);
+		return detail::compute_vec4_mod<T, U, R, P, detail::is_aligned<P>::value>::call(v1, tvec4<U, P>{v2.x});
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator%(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar % v.x), P>
+	{
+		typedef tvec4<decltype(scalar % v.x), P> xvec4;
+		return detail::compute_vec4_mod<T, U, decltype(scalar % v.x), P, detail::is_aligned<P>::value>::call(xvec4(static_cast<decltype(scalar % v.x)>(scalar)), xvec4(v));
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator%(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x % v2.x), P>
+	{
+		return tvec4<T, P>(v1.x) % v2;
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator%(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x % v2.x), P>
+	{
+		using result_type_scalar = decltype(v1.x % v2.x);
+		return detail::compute_vec4_mod<T, U, result_type_scalar, P, detail::is_aligned<P>::value>::call(v1, v2);
+	}
+
+	// -- Binary bit operators --
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator&(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x & scalar), P>
+	{
+		return v & tvec4<U, P>(scalar);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator&(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x & v2.x), P>
+	{
+		return v1 & tvec4<U, P>(v2.x);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator&(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar & v.x), P>
+	{
+		return tvec4<T, P>(scalar) & v;
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator&(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x & v2.x), P>
+	{
+		return tvec4<T, P>(v1.x) & v2;
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator&(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x & v2.x), P>
+	{
+		using R = decltype(v1.x & v2.x);
+		return detail::compute_vec4_and<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(v1, v2);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator|(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x | scalar), P>
+	{
+		using R = decltype(v.x | scalar);
+		return detail::compute_vec4_or<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(v, tvec4<U, P>{scalar});
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator|(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x | v2.x), P>
+	{
+		using R = decltype(v1.x | v2.x);
+		return detail::compute_vec4_or<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(v1, tvec4<U, P>{v2.x});
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator|(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar | v.x), P>
+	{
+		using R = decltype(scalar | v.x);
+		return detail::compute_vec4_or<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(tvec4<T, P>{scalar}, v);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator|(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x | v2.x), P>
+	{
+		using R = decltype(v1.x | v2.x);
+		return detail::compute_vec4_or<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(tvec4<T, P>{v1.x}, v2);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator|(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x | v2.x), P>
+	{
+		using R = decltype(v1.x | v2.x);
+		return detail::compute_vec4_or<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(v1, v2);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator^(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x ^ scalar), P>
+	{
+		using R = decltype(v.x ^ scalar);
+		return detail::compute_vec4_xor<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(v, tvec4<U, P>{scalar});
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator^(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x ^ v2.x), P>
+	{
+		using R = decltype(v1.x ^ v2.x);
+		return detail::compute_vec4_xor<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(v1, tvec4<U, P>{v2.x});
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator^(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar ^ v.x), P>
+	{
+		using R = decltype(scalar ^ v.x);
+		return detail::compute_vec4_xor<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(tvec4<T, P>{scalar}, v);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator^(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x ^ v2.x), P>
+	{
+		using R = decltype(v1.x ^ v2.x);
+		return detail::compute_vec4_xor<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(tvec4<T, P>{v1.x}, v2);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator^(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x ^ v2.x), P>
+	{
+		using R = decltype(v1.x ^ v2.x);
+		return detail::compute_vec4_xor<T, U, R, P, detail::is_int<T>::value, sizeof(T) * 8, detail::is_aligned<P>::value>::call(v1, v2);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator<<(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x << scalar), P>
+	{
+		return v << tvec4<U, P>{scalar};
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator<<(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x << v2.x), P>
+	{
+		return v1 << tvec4<U, P>{v2.x};
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator<<(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar << v.x), P>
+	{
+		return tvec4<T, P>{scalar} << v;
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator<<(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x << v2.x), P>
+	{
+		return tvec4<T, P>{v1.x} << v2;
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator<<(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x << v2.x), P>
+	{
+		using R = decltype(v1.x << v2.x);
+		return tvec4<R, P>{v1.x << v2.x, v1.y << v2.y, v1.z << v2.z, v1.w << v2.w};
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator >> (tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x >> scalar), P>
+	{
+		typedef tvec4<decltype(v.x >> scalar), P> xvec4;
+		return xvec4(v.x >> scalar, v.y >> scalar, v.z >> scalar, v.w >> scalar);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator >> (tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x >> v2.x), P>
+	{
+		return v1 >> tvec4<U, P>(v2.x);
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator >> (T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar >> v.x), P>
+	{
+		return tvec4<T, P>(scalar) >> v;
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator >> (tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x >> v2.x), P>
+	{
+		return tvec4<T, P>(v1.x) >> v2;
+	}
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_QUALIFIER auto operator >> (tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x >> v2.x), P>
+	{
+		using R = decltype(v1.x >> v2.x);
+		return tvec4<R, P>{v1.x >> v2.x, v1.y >> v2.y, v1.z >> v2.z, v1.w >> v2.w};
+	}
+
+#else//GLM_HAS_DECLTYPE
 	template <typename T, precision P>
 	GLM_FUNC_QUALIFIER tvec4<T, P> operator+(tvec4<T, P> const & v, T scalar)
 	{
@@ -930,6 +1330,7 @@ namespace detail
 	{
 		return tvec4<T, P>(v1) >>= v2;
 	}
+#endif//GLM_HAS_DECLTYPE
 
 	template <typename T, precision P> 
 	GLM_FUNC_QUALIFIER tvec4<T, P> operator~(tvec4<T, P> const & v)

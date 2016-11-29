@@ -159,7 +159,7 @@ namespace detail
 	};
 
 	template <typename T, precision P>
-	struct compute_vec4_and<T, P, true, 32, true>
+	struct compute_vec4_and<T, T, T, P, true, 32, true>
 	{
 		static tvec4<T, P> call(tvec4<T, P> const& a, tvec4<T, P> const& b)
 		{
@@ -183,7 +183,7 @@ namespace detail
 #	endif
 
 	template <typename T, precision P>
-	struct compute_vec4_or<T, P, true, 32, true>
+	struct compute_vec4_or<T, T, T, P, true, 32, true>
 	{
 		static tvec4<T, P> call(tvec4<T, P> const& a, tvec4<T, P> const& b)
 		{
@@ -207,7 +207,7 @@ namespace detail
 #	endif
 
 	template <typename T, precision P>
-	struct compute_vec4_xor<T, P, true, 32, true>
+	struct compute_vec4_xor<T, T, T, P, true, 32, true>
 	{
 		static tvec4<T, P> call(tvec4<T, P> const& a, tvec4<T, P> const& b)
 		{
