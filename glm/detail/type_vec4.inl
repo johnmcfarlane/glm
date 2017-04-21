@@ -718,9 +718,10 @@ namespace detail
 		return detail::compute_vec4_sub<decltype(v1.x - v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2));
 	}
 
-	template <typename T, typename U, precision P>
+	template <typename T, typename U, precision P,
+            typename std::enable_if<std::numeric_limits<U>::is_specialized, int>::type>
 	GLM_FUNC_QUALIFIER auto operator*(tvec4<T, P> const & v, U scalar)
-	-> typename std::enable_if<std::numeric_limits<U>::is_specialized, tvec4<decltype(v.x * scalar), P>>::type
+	-> tvec4<decltype(v.x * scalar), P>
 	{
 		typedef tvec4<decltype(v.x * scalar), P> xvec4;
 		return detail::compute_vec4_mul<decltype(v.x * scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x * scalar)>(scalar)));
@@ -734,9 +735,10 @@ namespace detail
 		return detail::compute_vec4_mul<decltype(v1.x * v2.x), P, detail::is_aligned<P>::value>::call(xvec4(v1), xvec4(v2.x));
 	}
 
-	template <typename T, typename U, precision P>
+	template <typename T, typename U, precision P,
+			typename std::enable_if<std::numeric_limits<T>::is_specialized, int>::type>
 	GLM_FUNC_QUALIFIER auto operator*(T scalar, tvec4<U, P> const & v)
-	-> typename std::enable_if<std::numeric_limits<T>::is_specialized, tvec4<decltype(scalar * v.x), P>>::type
+	-> tvec4<decltype(scalar * v.x), P>
 	{
 		typedef tvec4<decltype(v.x * scalar), P> xvec4;
 		return detail::compute_vec4_mul<decltype(v.x * scalar), P, detail::is_aligned<P>::value>::call(xvec4(v), xvec4(static_cast<decltype(v.x * scalar)>(scalar)));
