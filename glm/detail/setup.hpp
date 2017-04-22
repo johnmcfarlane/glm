@@ -381,6 +381,17 @@
 		(GLM_COMPILER & GLM_COMPILER_CUDA)))
 #endif
 
+// N3638 http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3638.html
+#if GLM_COMPILER & GLM_COMPILER_CLANG
+#	define GLM_HAS_DECLTYPE __has_feature(cxx_decltype)
+#elif GLM_LANG & GLM_LANG_CXX14_FLAG
+#	define GLM_HAS_DECLTYPE 1
+#else
+#	define GLM_HAS_DECLTYPE ((GLM_LANG & GLM_LANG_CXX0X_FLAG) && (\
+		((GLM_COMPILER & GLM_COMPILER_GCC) && (GLM_COMPILER >= GLM_COMPILER_GCC48)) || \
+		((GLM_COMPILER & GLM_COMPILER_VC) && (GLM_COMPILER >= GLM_COMPILER_VC14))))
+#endif
+
 // N2118
 #if GLM_COMPILER & GLM_COMPILER_CLANG
 #	define GLM_HAS_RVALUE_REFERENCES __has_feature(cxx_rvalue_references)

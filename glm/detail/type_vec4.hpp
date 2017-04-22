@@ -11,7 +11,11 @@
 #		include "_swizzle_func.hpp"
 #	endif
 #endif //GLM_SWIZZLE
+#if GLM_HAS_DECLTYPE
+#   include <type_traits>
+#endif //GLM_HAS_DECLTYPE
 #include <cstddef>
+#include <limits>
 
 namespace glm
 {
@@ -278,6 +282,210 @@ namespace glm
 
 	// -- Binary operators --
 
+#if GLM_HAS_DECLTYPE
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator+(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x + scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator+(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x + v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator+(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar + v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator+(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x + v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator+(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x + v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator-(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x - scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator-(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x - v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator-(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar - v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator-(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x - v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator-(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x - v2.x), P>;
+
+	template <typename T, typename U, precision P,
+			typename std::enable_if<std::numeric_limits<U>::is_specialized, int>::type dummy = 0>
+	GLM_FUNC_DECL auto operator*(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x * scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator*(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x * v2.x), P>;
+
+	template <typename T, typename U, precision P,
+	        typename std::enable_if<std::numeric_limits<T>::is_specialized, int>::type = 0>
+	GLM_FUNC_DECL auto operator*(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar * v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator*(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x * v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator*(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x * v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator/(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x / scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator/(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x / v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator/(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar / v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator/(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x / v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator/(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x / v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator%(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x % scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator%(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x % v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator%(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar % v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator%(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x % v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator%(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x % v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator&(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x & scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator&(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x & v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator&(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar & v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator&(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x & v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator&(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x & v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator|(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x | scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator|(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x | v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator|(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar | v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator|(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x | v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator|(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x | v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator^(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x ^ scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator^(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x ^ v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator^(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar ^ v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator^(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x ^ v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator^(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x ^ v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator<<(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x << scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator<<(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x << v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator<<(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar << v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator<<(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x << v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator<<(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x << v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator>>(tvec4<T, P> const & v, U scalar)
+	-> tvec4<decltype(v.x >> scalar), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator>>(tvec4<T, P> const & v1, tvec1<U, P> const & v2)
+	-> tvec4<decltype(v1.x >> v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator>>(T scalar, tvec4<U, P> const & v)
+	-> tvec4<decltype(scalar >> v.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator>>(tvec1<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x >> v2.x), P>;
+
+	template <typename T, typename U, precision P>
+	GLM_FUNC_DECL auto operator>>(tvec4<T, P> const & v1, tvec4<U, P> const & v2)
+	-> tvec4<decltype(v1.x >> v2.x), P>;
+
+#else//GLM_HAS_DECLTYPE
 	template <typename T, precision P>
 	GLM_FUNC_DECL tvec4<T, P> operator+(tvec4<T, P> const & v, T scalar);
 
@@ -427,6 +635,7 @@ namespace glm
 
 	template <typename T, precision P>
 	GLM_FUNC_DECL tvec4<T, P> operator>>(tvec4<T, P> const & v1, tvec4<T, P> const & v2);
+#endif//GLM_HAS_DECLTYPE
 
 	template <typename T, precision P> 
 	GLM_FUNC_DECL tvec4<T, P> operator~(tvec4<T, P> const & v);
